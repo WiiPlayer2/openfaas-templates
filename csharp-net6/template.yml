@@ -1,2 +1,2 @@
 language: csharp-net6
-fprocess: dotnet ./function.dll
+fprocess: dotnet ./Function.dll
