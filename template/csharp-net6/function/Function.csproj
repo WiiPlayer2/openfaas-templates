@@ -9,7 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="DarkLink.OpenFaaS" Version="0.0.3-dev" />
+    <PackageReference Include="DarkLink.OpenFaaS" Version="0.0.4-dev" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.14.0" />
   </ItemGroup>
 
