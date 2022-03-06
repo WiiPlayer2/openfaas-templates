@@ -9,7 +9,8 @@ RUN apk --no-cache add curl \
 
 FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS base
 WORKDIR /app
-EXPOSE 80
+EXPOSE 8082
+ENV ASPNETCORE_URLS=http://*:8082
 
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
@@ -36,7 +37,7 @@ USER app
 ENV fprocess="dotnet ./Function.dll"
 ENV cgi_headers="true"
 ENV mode="http"
-ENV upstream_url="http://localhost:80"
+ENV upstream_url="http://localhost:8082"
 EXPOSE 8080
 
 HEALTHCHECK --interval=3s CMD [ -e /tmp/.lock ] || exit 1
