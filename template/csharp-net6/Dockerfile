@@ -12,13 +12,16 @@ WORKDIR /app
 EXPOSE 8082
 ENV ASPNETCORE_URLS=http://*:8082
 
-FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
+FROM --platform=${BUILDARCH} mcr.microsoft.com/dotnet/sdk:6.0 AS build
+ARG TARGETARCH
 WORKDIR /src
 COPY ["./function/Function.csproj", "."]
-RUN dotnet restore "./Function.csproj"
+COPY ./map-platform.sh map-platform.sh
+RUN chmod +x ./map-platform.sh
+RUN dotnet restore --runtime $(./map-platform.sh) "./Function.csproj"
 COPY ./function .
 WORKDIR "/src/."
-RUN dotnet build "Function.csproj" -c Release -o /app/build
+RUN dotnet build --runtime $(./map-platform.sh) "Function.csproj" -c Release -o /app/build
 
 FROM build AS publish
 RUN dotnet publish "Function.csproj" -c Release -o /app/publish
